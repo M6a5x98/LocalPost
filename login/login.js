@@ -12,3 +12,8 @@ document.querySelector("form").addEventListener("submit", (e) => {
   /*requeteUsername.send(uname)
     requetePassword.send(pword)*/
 });
+
+//wait 30s
+
+requetePassword.abort()
+requeteUsername.abort()
