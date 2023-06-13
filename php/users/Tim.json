@@ -1,7 +1,7 @@
 {
   "username":"Tim",
   "id":"#TimIsTheBest",
-	"admin":false,
+	"admin":true,
 	"posts":0,
 	"listposts":[[]],
 	"connected":false
