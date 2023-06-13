@@ -9,7 +9,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
   uname = e.target[0].value;
   pword = e.target[1].value;
-  requeteUsername.open("POST", "url/" + uname + ".json");
+  requeteUsername.open("POST", "url/users/" + uname + ".json");
   requeteUsername.responseType = "json";
   /*requeteUsername.send(uname)*/
 });
