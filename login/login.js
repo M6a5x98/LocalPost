@@ -1,43 +1,35 @@
-let requeteUsername = new XMLHttpRequest();
-let Fjson;
-let uname;
-let pword;
-let uname2;
-let pword2;
+const url = "";
+const nav = document.getElementById("nav");
+let reqRes;
+let requestLogin = new XMLHttpRequest();
+
+reqRes = requestLogin.addEventListener("load", requestResponse);
+
+function requestResponse() {
+  if (JSON.parse(requestLogin.response).error) {
+    nav.innerHTML =
+      "<p class='warn'>Le mot de passe ou le nom d'utilisateur est faux.</p>" /*<div class='circle'>+</div>*/;
+    console.error(JSON.parse(requestLogin.response).error);
+  } else if (
+    !JSON.parse(requestLogin.response).error &&
+    JSON.parse(requestLogin.response).message === "Login"
+  ) {
+    nav.innerHTML =
+      "<p class='good'>Login !</p>" /*<div class='circle'>+</div>*/;
+    /*setTimeout(() => {
+      location.replace("./home.htm");
+    }, duration);*/
+  }
+  return JSON.parse(requestLogin.response);
+}
 
 document.querySelector("form").addEventListener("submit", (e) => {
   e.preventDefault();
-  uname = e.target[0].value;
-  pword = e.target[1].value;
-  requeteUsername.open("POST", "url/users/" + uname + ".json");
-  requeteUsername.responseType = "json";
-  /*requeteUsername.send(uname)*/
+  requestLogin.open("POST", url, true);
+  requestLogin.setRequestHeader("Content-Type", "application/json");
+  u = e.target[0].value;
+  p = e.target[1].value;
+  requestLogin.send(
+    JSON.stringify({ action: "Login", data: { username: u, password: p } })
+  );
 });
-
-window.addEventListener(requeteUsername.onload, (e) => {
-  Fjson = requeteUsername.response;
-  uname2 = Fjson["username"];
-  pword2 = Fjson["password"];
-  if (uname2 == uname) {
-    if (pword2 == pword) {
-      if (Fjson["connected"]) {
-        document.querySelector("#6598").innerHTML =
-          "<span color='red'>Cet utilisateur est déjà connecté</span>";
-      }
-    } else {
-      document.querySelector("#6598").innerHTML =
-        "<span color='red'>Mot de passe incorect</span>";
-    }
-  } else {
-    document.querySelector("#6598").innerHTML =
-      "<span color='red'>Cet utilisateur n'existe pas</span>";
-  }
-});
-
-do {
-  setTimeout(() => {
-    wait++;
-  }, 1000);
-  requetePassword.abort();
-  requeteUsername.abort();
-} while (wait < 30);
