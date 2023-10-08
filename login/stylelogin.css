@@ -1,0 +1,113 @@
+body {
+  background-color: #7cacd3bd;
+}
+
+main {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  border: black 2px solid;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 5%;
+}
+
+input#passWord {
+  margin-top: 60%;
+  margin-bottom: 10%;
+}
+
+input {
+  border-radius: 50px;
+  caret-color: blue;
+}
+
+input#sub {
+  background: yellowgreen;
+  border: none;
+  border-radius: 50px;
+  margin: 0 22% 0 22%;
+  box-shadow: 11px 9px 6px black;
+}
+
+#sub:hover {
+  background-color: black;
+  color: yellowgreen;
+  box-shadow: 11px 9px 3px yellowgreen;
+}
+
+nav {
+  border: black 2px solid;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 90%;
+  margin: 0.5% 0 4% 2%;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+section#Langages {
+  border: rgb(255, 70, 70) 1px solid;
+  background: rgb(255, 70, 70);
+  margin-top: 1%;
+  padding: 1% 0 5% 3%;
+  transition: padding 1s;
+}
+
+span {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.9rem;
+}
+
+a {
+  text-decoration: none;
+  color: red;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: blue;
+}
+
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+}
+
+li:hover {
+  font-size: 0.99rem;
+  transition: 0.1s;
+}
+
+.warn {
+  color: red;
+  font-size: large;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.good {
+  color: green;
+  font-size: large;
+  font-weight: lighter;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.circle {
+  border: 1px solid black;
+  border-radius: 50%;
+  margin-right: 10%;
+  padding: 7px;
+}
