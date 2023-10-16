@@ -1,5 +1,5 @@
 # Posts
-A post sytem for my friend Shidan
+A post sytem for my friend diwch🥪
 Js for client and server.
 
 ## Help
