@@ -1,0 +1,13 @@
+{
+  "username": "test",
+  "password": "ichbineintest",
+  "id": 1,
+  "account": {
+    "profilePicture": "/Backend/assets/Users/test.jpg",
+    "nameDisplayColor": "black",
+    "perms": "user",
+    "isAuthorizedPublishAll": false
+  },
+  "messages": [],
+  "likes": []
+}

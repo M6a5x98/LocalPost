@@ -1,0 +1,1 @@
+function getDatas(req, res) {}
