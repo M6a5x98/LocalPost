@@ -43,11 +43,11 @@ function create(req, res) {
   const builtFile = ReadAccountFile(Token(token));
   Object.defineProperty(builtFile, "messages", { value: messages });
   writeFileSync(
-    `/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/message/${id}.json`,
+    `../../assets/message/${id}.json`,
     JSON.stringify(postProperties)
   );
   writeFileSync(
-    `/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/${Token(
+    `../../assets/Users/${Token(
       token
     )}.json`,
     JSON.stringify(builtFile)

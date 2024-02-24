@@ -37,7 +37,7 @@ function del(req, res) {
     GetValueFromAccountFile(Token(token), ["id"]) ===
     JSON.parse(
       readFileSync(
-        "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/message/" +
+        "../../assets/message/" +
           parseInt(req.params["id"]) +
           ".json",
         "utf-8"
@@ -57,7 +57,7 @@ function del(req, res) {
       const builtFile = ReadAccountFile(Token(token));
       Object.defineProperty(builtFile, "messages", { value: messages });
       writeFileSync(
-        "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/" +
+        "../../assets/Users/" +
           Token(token) +
           ".json",
         JSON.stringify(builtFile)

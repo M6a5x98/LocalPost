@@ -24,7 +24,7 @@ app.use("/api/assets", async (req, res) => {
     case "pdp":
       try {
         readFileSync(
-          "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/" +
+          "./assets/Users/" +
             req.query["name"] +
             ".jpg"
         );
@@ -36,7 +36,7 @@ app.use("/api/assets", async (req, res) => {
             '" not found.</span>'
         );
         console.log(
-          `File /Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/${req.query["name"]}".jpg doesn't exists, 404 sent to client(${req.ip}).`
+          `File ./assets/Users/${req.query["name"]}".jpg doesn't exists, 404 sent to client(${req.ip}).`
         );
         e = false;
         return;
@@ -44,18 +44,18 @@ app.use("/api/assets", async (req, res) => {
       e = true;
       if (e) {
         await res.sendFile(
-          "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/" +
+          "./assets/Users/" +
             req.query["name"] +
             ".jpg"
         );
         console.log(
-          `File /Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/${req.query["name"]}".jpg succesfully sended to client(${req.ip}).`
+          `File ./assets/Users/${req.query["name"]}".jpg succesfully sended to client(${req.ip}).`
         );
       }
       return;
     case "likescode":
       res.sendFile(
-        "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/likescode.txt"
+        "./assets/likescode.txt"
       );
   }
 });
@@ -75,9 +75,6 @@ app.use(
 );
 console.log("You can send at /api/disconnexion");
 // Setup de la page d'accueil
-app.get("/", (req, res) =>
-  res.sendFile("/Fichiers.txt/Code/LocalPost/Localpost.png")
-);
 
 //Lancer le serveur
 app.listen(port, () => console.log(`Le serveur a démarré au port ${port}`));

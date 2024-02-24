@@ -18,7 +18,7 @@ const GetValueFromAccountFile = (username, propertyPath) => {
 
 const Token = (token) => {
   let TokenList = readFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+    "../assets/tokens.prop",
     "utf-8"
   ).split("\n");
 
@@ -44,7 +44,7 @@ const ReadAccountFile = (username) => {
   try {
     return JSON.parse(
       readFileSync(
-        "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/Users/" +
+        "../assets/Users/" +
           encodeURIComponent(username) +
           ".json",
         "utf-8"
@@ -100,7 +100,7 @@ const GetPostProperties = (rawPost, writerToken) => {
   };
   let numberOfFiles = 0;
   readdirSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/message/"
+    "../assets/message/"
   ).forEach((file) => numberOfFiles++);
   let dateData = GetFormatedDate();
 
@@ -123,13 +123,13 @@ const Post2HTML = (parsedPost) => {
 const DelPost = (postID) => {
   if (
     existsSync(
-      `/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/message/${parseInt(
+      `../assets/message/${parseInt(
         postID
       )}.json`
     )
   ) {
     unlinkSync(
-      `/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/message/${parseInt(
+      `../assets/message/${parseInt(
         postID
       )}.json`
     );
@@ -149,7 +149,7 @@ const generateToken = () => {
 const AppendTokenFile = (username) => {
   let token = generateToken();
   appendFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+    "../assets/tokens.prop",
     `${username}=${token}\n`,
     "utf-8"
   );
@@ -160,7 +160,7 @@ const AppendTokenFile = (username) => {
 const IsTokenAlredyAssignatedTo = (username) => {
   let IsTokenAlredyAssignatedTo;
   let TokenList = readFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+    "../assets/tokens.prop",
     "utf-8"
   ).split("\n");
 
@@ -183,7 +183,7 @@ const IsTokenAlredyAssignatedTo = (username) => {
 const TokenExists = (token) => {
   let tokens = [];
   readFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+    "../assets/tokens.prop",
     "utf-8"
   )
     .split("\n")
@@ -199,7 +199,7 @@ const TokenExists = (token) => {
 
 function CanLike(postId, userId) {
   const postLikes = readFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/likes.prop",
+    "../assets/likes.prop",
     "utf-8"
   )
     .split("\n")

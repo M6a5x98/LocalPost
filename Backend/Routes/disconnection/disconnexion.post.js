@@ -27,9 +27,9 @@ function post(req, res) {
     });
 
   writeFileSync(
-    "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+    "../../assets/tokens.prop",
     readFileSync(
-      "/Fichiers.txt/Code/LocalPost/FrontAndBack/Backend/assets/tokens.prop",
+      "../../assets/tokens.prop",
       "utf-8"
     ).replace(`${Token(token)}=${token}\n`, "")
   );
