@@ -3,7 +3,7 @@
   "password": "ichbineintest",
   "id": 1,
   "account": {
-    "profilePicture": "/Backend/assets/Users/test.jpg",
+    "profilePicture": "",
     "nameDisplayColor": "black",
     "perms": "user",
     "isAuthorizedPublishAll": false
