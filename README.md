@@ -1,5 +1,5 @@
 # Posts
-A post sytem for my friend [diwch🥪](https://www.youtube.com/@Dwich73)
+A post sytem for my friend [diwch🥪](https://github.com/Diwch-code)
 Js for client and server.
 
 ## Help
