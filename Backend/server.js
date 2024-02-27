@@ -59,6 +59,7 @@ app.use("/api/assets", async (req, res) => {
       );
   }
 });
+app.get("/favicon.ico", (req, res) => {res.sendFile("./logo.ico")})
 // Setup de la route de login
 app.use("/api/login", require("./Routes/login/login.routes"));
 console.log("You can send at /api/login");
