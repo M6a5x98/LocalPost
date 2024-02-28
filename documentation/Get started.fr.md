@@ -21,8 +21,8 @@ L'API a un certain nombre de codes d'erreur, les voici :
 102=Wrong password
 103=Bad request
 104=Unauthorized connection from multiple devices
-105=Post doesn't exits
-106=Token doesn't exits
+105=Post doesn‘t exits
+106=Token doesn‘t exits
 201=Request was too long
 202=Internal server error
 301=Need SecretPin
