@@ -3,7 +3,7 @@
 Bienvenue sur la documentation officielle de l'API LocalPost !
 Avant tout, vous devez pouvoir :
 
-- Envoyer des requêtes HTTP (Via [[`cURL`](https://curl.se/docs/tutorial.html)], [[`Invoke-WebRequest`](https://learn.microsoft.com/fr-fr/powershell/module/microsoft.powershell.utility/invoke-webrequest)], [[`Reqbin`](https://reqbin.com/)], `Postman`, ou d'autres outils similaires)
+- Envoyer des requêtes HTTP (Via [`cURL`](https://curl.se/docs/tutorial.html), [`Invoke-WebRequest`](https://learn.microsoft.com/fr-fr/powershell/module/microsoft.powershell.utility/invoke-webrequest), [`Reqbin`](https://reqbin.com/), `Postman`, ou d'autres outils similaires)
 - Utiliser les Headers et les différentes méthodes (`POST`, `PUT`, `PATCH`, `DELETE`)
 
 **Warning: L'utilisateur test que je vais utiliser n'existe pas, son token non plus. Son nom d'utilisateur sera `test` son token sera `192p198p1p1`, et son mot de passe `mein name ist test`**
