@@ -1,5 +1,5 @@
 # Posts
-A post sytem for my friend [diwch🥪](https://www.youtube.com/@Dwich73)
+An entire social media.
 Js for client and server.
 
 ## Help
