@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;1,300&display=swap");
+
+body {
+  background-color: #7cacd3bd;
+}
+label {
+  font-family: "Source Code Pro";
+}
+
+input {
+  border-radius: 50px;
+  caret-color: blue;
+}
+
+input[type="submit"],
+button {
+  color: black;
+  background: yellowgreen;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 9px 9px 6px black;
+  cursor: pointer;
+}
+input[type="submit"]:hover,
+button:hover {
+  background: black;
+  color: yellowgreen;
+  box-shadow: 9px 9px 6px yellowgreen;
+}
+nav {
+  border: black 2px solid;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 90%;
+  margin: 0.5% 0 4% 2%;
+  border-radius: 10px;
+  z-index: -1;
+  padding: 1vw;
+  overflow-x: hidden;
+}
+span,
+.content {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.9rem;
+}
+
+a {
+  text-decoration: none;
+  color: #ff4646;
+}
+a:hover {
+  color: darkblue;
+}
+
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+}
+
+h2,
+.title {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+}
+
+.focusText:hover {
+  font-size: 0.99rem;
+  transition: 0.1s;
+}
+.focusEl > *:hover {
+  height: calc(var(--normal-height) + var(--more));
+  width: calc(var(--normal-width) + var(--more));
+  transition: 0.1s;
+  /* position: absolute; */
+}
+.focusEl.icon > *:hover {
+  height: calc(var(--normal-height) + var(--more));
+  width: calc(var(--normal-width) + var(--more));
+  transition: 0.1s;
+  position: absolute;
+}
+[type="warn"] {
+  color: red;
+  font-size: var(--warnsize);
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
+
+[type="good"] {
+  color: green;
+  font-size: large;
+  font-weight: lighter;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+[type="info"] {
+  color: black;
+  font-weight: lighter;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+.msgVisible {
+  display: inline-block;
+}
+
+.message {
+  padding-right: 2em;
+  padding-left: 75%;
+  white-space: nowrap;
+  animation: defilement 15s infinite linear;
+}
+
+*::selection {
+  background-color: yellowgreen;
+}
+@keyframes defilement {
+  0% {
+    transform: translate3d(150%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@media screen and (min-width: 1630px) {
+  nav {
+    padding: 17px;
+  }
+}

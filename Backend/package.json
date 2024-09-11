@@ -1,0 +1,36 @@
+{
+  "name": "localpost-api",
+  "version": "1.0.0",
+  "description": "A la base, un test mais un se retouve avec une super API qui marche.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "nodemon . -port 5000",
+    "start": "node server 80",
+    "manager": "node actions"
+  },
+  "nodemonConfig": {
+    "verbose": false,
+    "ignore": [
+      "./Frontend/*.*",
+      "./database/messages/*.json",
+      "./database/Users/*.json",
+      "./database/Users/*.jpg",
+      "./assets/tokens.prop",
+      "./Routes/utils.js",
+      "./assets/translator.js/translations/*.json",
+      "./Frontend/modules/*.js"
+    ]
+  },
+  "author": "m6a5x98",
+  "license": "ISC",
+  "dependencies": {
+    "bowser": "^2.11.0",
+    "express": "^4.19.2",
+    "image-type": "^5.2.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

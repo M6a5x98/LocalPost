@@ -1,0 +1,43 @@
+/*Post style for users*/
+p.user {
+  text-align: start;
+  margin-left: 1%;
+  font-family: Verdana, sans-serif;
+  font-size: 0.9rem;
+}
+h2.user {
+  text-align: center;
+  margin-top: 20px;
+}
+main.user {
+  border: black 1px solid;
+}
+/*Post style for bots*/
+p.bot {
+  text-align: start;
+  margin-left: 1%;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+}
+h2.bot {
+  text-align: center;
+  margin-top: 20px;
+}
+main.bot {
+  border: rgba(139, 20, 163, 0.678) 1px solid;
+}
+/*Post style for admins*/
+p.admin {
+  text-align: start;
+  margin-left: 1%;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.9rem;
+}
+h2.admin {
+  text-align: center;
+  margin-top: 20px;
+}
+main.admin {
+  border: #4b19ef 1px solid;
+  border-radius: 10px;
+}

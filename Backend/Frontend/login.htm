@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/api/assets?file=theme" />
+    <link rel="stylesheet" href="/api/assets?file=loginstyle" />
+    <title trjs trjsid="title">Login - LocalPost</title>
+  </head>
+  <body>
+    <main>
+      <form>
+        <label for="user" trjs trjsid="username"><!--Nom d'utilisateur--></label
+        ><br />
+        <input type="text" name="user" id="userName" /><br />
+        <div id="pass">
+          <label for="passw" trjs trjsid="password"><!--Mot de passe--></label
+          ><br />
+          <input type="password" name="passw" id="passWord" /><svg
+            width="15"
+            height="10"
+            id="view"
+          >
+            <ellipse
+              cx="7"
+              cy="10"
+              rx="6"
+              ry="2"
+              stroke="#000000"
+              fill="transparent"
+              stroke-width="1"
+            />
+            <circle
+              cx="7"
+              cy="10"
+              r="1"
+              stroke="#000000"
+              fill="transparent"
+            /></svg
+          ><br />
+          <div style="display: flex; justify-content: center">
+            <button id="sub" trjs trjsid="submit" type="submit">
+              <!--Se connecter--></button
+            ><span id="or" trjs trjsid="or">Ou</span
+            ><button
+              id="sign"
+              trjs
+              trjsid="signup"
+              onclick="location.pathname = '/signup'"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </main>
+    <nav id="nav">
+      <span class="message" type="info" trjs trjsid="nav_message"
+        ><!--Bienvenue sur LocalPost !--></span
+      >
+    </nav>
+    <section id="updates">
+      <h1 trjs trjsid="updates_header"><!--Mises à jours récentes--></h1>
+    </section>
+    <script src="/api/assets?file=loginscript"></script>
+    <script src="/api/assets?file=module&name=translator.js"></script>
+  </body>
+</html>

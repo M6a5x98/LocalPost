@@ -1,0 +1,13 @@
+{
+  "username": "test",
+  "password": "ichbineintest",
+  "id": 1,
+  "account": {
+    "profilePicture": "",
+    "nameDisplayColor": "black",
+    "perms": "user",
+    "isAuthorizedPublishAll": false
+  },
+  "messages": [],
+  "likes": []
+}

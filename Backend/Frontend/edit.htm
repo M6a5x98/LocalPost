@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/api/assets?file=editscript"></script>
+    <script type="module" src="/api/assets?file=module&name=marked"></script>
+    <script type="module" src="/api/assets?file=module&name=dompurify"></script>
+    <script src="/api/assets?file=module&name=translator.js"></script>
+    <link rel="stylesheet" href="/api/assets?file=theme" />
+    <link rel="stylesheet" href="/api/assets?file=editstyle" />
+    <title trjs trjsid="title">Nouveau Post - Localpost</title>
+  </head>
+  <body>
+    <img
+      src="/api/assets?file=svg&name=house"
+      link="true"
+      class="linkTo:/home"
+      style="position: absolute"
+    />
+    <nav></nav>
+    <header>
+      <h1 trjs trjsid="title"></h1>
+    </header>
+    <main id="editor">
+      <textarea name="title" id="title_text" rows="1"></textarea>
+      <textarea name="content" id="content_text"></textarea>
+      <div id="editor_footer">
+        <button
+          id="cancel"
+          onclick="location.replace('/home')"
+          trjs
+          trjsid="cancel"
+        >
+          Annuler</button
+        ><button id="publish" trjs trjsid="publish">Publier</button>
+      </div>
+    </main>
+    <section id="preview"></section>
+  </body>
+</html>
