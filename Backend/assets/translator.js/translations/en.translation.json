@@ -9,7 +9,7 @@
     "/": {
       "title": "Login - LocalPost",
       "username": "Username",
-
+      "password": "Password",
       "submit": "Login",
       "nav_message": "Welcome on LocalPost !",
       "updates_header": "Latest updates",
@@ -57,6 +57,32 @@
       "confirm_create_post": "Are-you sure to publish this post ?",
       "confirm_edit_post": "Are-you sure to edit this post ?",
       "cant_publish_empty": "You can't publish an empty post."
+    },
+    "/signup": {
+      "title": "Create an account - Localpost",
+      "username": "Username",
+      "password": "Password",
+      "username_pl": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "my_username"
+      },
+      "password_pl": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "my.secret#pass@word"
+      },
+      "submit": "Next step →",
+      "nav_message": "Welcome on LocalPost !",
+      "updates_header": "Latest updates",
+      "features_added": "Features added :",
+      "major_update": "Major Update",
+      "minor_update": "Minor Update",
+      "upload_and_finish": "Create my account",
+      "selected_file": "Selected file : ",
+      "no_file": "No file",
+      "file_not_valid": "Filetype is not valid",
+      "upload": "Upload my profile picture"
     }
   }
 }

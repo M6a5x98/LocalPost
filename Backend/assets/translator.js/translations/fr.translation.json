@@ -1,6 +1,6 @@
 {
   "language": "fr",
-  "exact_domain": true,
+  "exact_domain": false,
   "domains": {
     "localpost.fr": { "description": "main domain" },
     "localhost": { "description": "dev domain" }
