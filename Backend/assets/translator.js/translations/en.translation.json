@@ -15,7 +15,9 @@
       "updates_header": "Latest updates",
       "features_added": "Features added :",
       "major_update": "Major Update",
-      "minor_update": "Minor Update"
+      "minor_update": "Minor Update",
+      "signup": "Sign up",
+      "or": " Or "
     },
     "/home": {
       "title": "My account - LocalPost",
