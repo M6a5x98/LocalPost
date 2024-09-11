@@ -5,22 +5,30 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "server": "nodemon ."
+    "test": "nodemon . -port 5000",
+    "start": "node server 80",
+    "manager": "node actions"
   },
   "nodemonConfig": {
     "verbose": false,
     "ignore": [
-      "./assets/message/*.json",
-      "./assets/Users/*.json",
-      "./assets/Users/*.jpg",
+      "./Frontend/*.*",
+      "./database/messages/*.json",
+      "./database/Users/*.json",
+      "./database/Users/*.jpg",
       "./assets/tokens.prop",
-      "./Routes/utils.js"
+      "./Routes/utils.js",
+      "./assets/translator.js/translations/*.json",
+      "./Frontend/modules/*.js"
     ]
   },
   "author": "m6a5x98",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "bowser": "^2.11.0",
+    "express": "^4.19.2",
+    "image-type": "^5.2.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

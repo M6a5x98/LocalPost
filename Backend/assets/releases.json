@@ -1,0 +1,29 @@
+[
+  {
+    "version": "1.0.0",
+    "description": {
+      "en": "This the first update.",
+      "fr": "C'est la première mise à jour"
+    },
+    "features": {
+      "en": [
+        "Posts",
+        "Users",
+        "Reactions to posts",
+        "Post editing",
+        "Pages translation",
+        "And so much more"
+      ],
+      "fr": [
+        "Posts",
+        "Utilisateur",
+        "Reactions aux posts",
+        "Editions des post",
+        "Traduction des pages",
+        "Et plus"
+      ]
+    },
+    "patches": null,
+    "major": true
+  }
+]

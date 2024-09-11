@@ -1,0 +1,91 @@
+/*Translate*/
+header {
+  display: flex;
+  justify-content: center;
+  translate: 0 3vh;
+}
+main {
+  translate: 0 3vh;
+}
+textarea {
+  resize: none;
+  width: 98vw;
+  font-size: 1rem;
+  border: 1px solid black;
+}
+textarea#title_text {
+  text-align: center;
+  background: radial-gradient(#7ab1dd, #9ec7e9);
+  margin-bottom: 1vh;
+}
+textarea#content_text {
+  background: radial-gradient(#64a7dd, #9dc1de);
+  height: 20vh;
+}
+/*Not widely supported*/
+textarea::grammar-error,
+textarea::spelling-error {
+  text-decoration: dotted yellowgreen;
+}
+
+div#editor_footer {
+  display: flex;
+  /* justify-items: flex-end; */
+  padding: 10px;
+  width: fit-content;
+  translate: 87vw;
+}
+div#editor_footer > button {
+  margin-left: 1vw;
+}
+button#cancel {
+  background-color: #ff4646;
+  box-shadow: 11px 9px 6px #0b0bb6fb;
+}
+button#cancel:hover {
+  background: #0b0bb6fb;
+  color: #ff4646;
+  box-shadow: 11px 9px 6px #ff4646;
+}
+button#publish {
+  background-color: green;
+  box-shadow: 11px 9px 6px yellowgreen;
+}
+button#publish:hover {
+  background: yellowgreen;
+  color: green;
+  box-shadow: 11px 9px 6px green;
+}
+/*Translate*/
+section#preview {
+  translate: 0 3vh;
+}
+/*Post style*/
+div.post {
+  display: grid;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0 5px 5px 0;
+  margin-top: 20px;
+  grid-template-columns: 1fr 10fr 0.2fr;
+}
+div.user {
+  border-right: 1px black solid;
+  width: min-content;
+}
+h4.username {
+  font-size: 1rem;
+  translate: 1vw;
+}
+div.post > div.user > img {
+  border: 1px black solid;
+  border-radius: 50%;
+  width: 7vw;
+  margin-right: 5px;
+}
+div.post > div.postText > p.content > p > a {
+  color: #ff4646;
+}
+div.post > div.postText > p.content > p > a:hover {
+  color: darkblue;
+}

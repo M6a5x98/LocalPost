@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/api/assets?file=theme" />
+    <link rel="stylesheet" href="/api/assets?file=signupstyle" />
+    <script src="/api/assets?file=module&name=translator.js"></script>
+    <script src="/api/assets?file=signupscript"></script>
+    <title trjs trjsid="title">Créer un compte - Localpost</title>
+  </head>
+  <body>
+    <nav>
+      <span class="message" type="info" trjs trjsid="nav_message"
+        ><!--Bienvenue sur LocalPost !--></span
+      >
+    </nav>
+    <main>
+      <form>
+        <label for="user" trjs trjsid="username"></label><br />
+        <input
+          type="text"
+          trjs
+          trjsid="username_pl"
+          name="user"
+          id="userName"
+        /><br />
+        <div id="pass">
+          <label for="passw" trjs trjsid="password"></label><br />
+          <input
+            type="password"
+            trjs
+            trjsid="password_pl"
+            name="passw"
+            id="passWord"
+          /><svg width="15" height="10" id="view">
+            <ellipse
+              cx="7"
+              cy="10"
+              rx="6"
+              ry="2"
+              stroke="#000000"
+              fill="transparent"
+              stroke-width="1"
+            ></ellipse>
+            <circle
+              cx="7"
+              cy="10"
+              r="1"
+              stroke="#000000"
+              fill="transparent"
+            ></circle></svg
+          ><br />
+          <div style="display: flex; justify-content: center">
+            <button id="sub" trjs trjsid="submit"></button>
+          </div>
+        </div>
+      </form>
+      <form id="upload" style="display: none">
+        <input
+          type="file"
+          name="pdp"
+          id="profile_picture"
+          accept="image/*"
+          style="display: none"
+        />
+        <label for="profile_picture" id="label_pp" trjs trjsid="upload"></label>
+        <button
+          type="submit"
+          trjs
+          trjsid="upload_and_finish"
+          id="uploadbtn"
+        ></button>
+      </form>
+    </main>
+    <section id="updates">
+      <h1 trjs trjsid="updates_header"><!--Mises à jours récentes--></h1>
+    </section>
+  </body>
+</html>

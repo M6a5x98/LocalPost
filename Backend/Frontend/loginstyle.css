@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;1,300&display=swap");
+
+main {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  border: black 2px solid;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 5%;
+}
+
+label {
+  font-size: 0.9rem;
+  margin-top: 3vh;
+  margin-bottom: 0 !important;
+}
+
+#passWord {
+  margin-bottom: 10%;
+}
+
+#view {
+  transform: translate(-20px, -3px);
+  cursor: pointer;
+}
+
+input#userName {
+  margin-bottom: 30%;
+}
+
+#or {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+}
+
+#sign {
+  margin-right: 0.3vw;
+}
+
+section#updates {
+  border: rgb(255, 70, 70) 1px solid;
+  background: rgb(255, 70, 70);
+  margin-top: 1%;
+  padding: 1% 0 5% 3%;
+  /* transition: padding 1s; */
+}
+
+h3.update {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+p#additions_header {
+  font-size: medium;
+  font-weight: bold;
+}
+
+li.addition {
+  list-style: none;
+  translate: 0 -1.5vh;
+  line-height: 2vh;
+}
+/*
+Theme : 
+background : skyblue,
+font : Verdana, Geneva, Tahoma, sans-serif,
+button : yellowgreen,
+button:hover : black,
+a : #33aada,
+label : "Source Code Pro",
+div_background : #FF4646
+*/

@@ -1,0 +1,62 @@
+{
+  "language": "en",
+  "exact_domain": false,
+  "domains": {
+    "localpost.fr": { "description": "main domain" },
+    "localpost": { "description": "dev domain" }
+  },
+  "translations": {
+    "/": {
+      "title": "Login - LocalPost",
+      "username": "Username",
+
+      "submit": "Login",
+      "nav_message": "Welcome on LocalPost !",
+      "updates_header": "Latest updates",
+      "features_added": "Features added :",
+      "major_update": "Major Update",
+      "minor_update": "Minor Update"
+    },
+    "/home": {
+      "title": "My account - LocalPost",
+      "sign_up": "Sign up on ",
+      "search": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "Search for users"
+      },
+      "delete_post": "Delete",
+      "edit_post": "Edit",
+      "search_empty": "Your search request is empty",
+      "search_not_found": "No users matching $ were found",
+      "account_delete": "Are you sure to delete your account ?",
+      "password": "Password"
+    },
+    "/user/*": {
+      "title": {
+        "type": "warning",
+        "translate": false
+      },
+      "sign_up": "Sign up on ",
+      "search": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "Search for users"
+      },
+      "nopost_you": "You",
+      "nopost_text_1": " haven't published anything yet",
+      "nopost_text_2": " has't published anything yet"
+    },
+    "/posts/edit": {
+      "postNotExist": "This post doesn't exists",
+      "cantEditPost": "You can't edit this post",
+      "title": "New Post",
+      "cancel": "Cancel",
+      "publish": "Publish",
+      "edit": "Edit",
+      "confirm_create_post": "Are-you sure to publish this post ?",
+      "confirm_edit_post": "Are-you sure to edit this post ?",
+      "cant_publish_empty": "You can't publish an empty post."
+    }
+  }
+}

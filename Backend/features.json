@@ -1,0 +1,20 @@
+{
+  "csvUAStats": {
+    "description": "Log each connexion to the main page (/) or to the home page (/home) to csv file with UA datas.",
+    "type": "functionnality",
+    "file": "server.js",
+    "enabled": false
+  },
+  "APIActions": {
+    "description": "Use the API without requests",
+    "type": "script",
+    "file": "actions.js",
+    "enabled": false
+  },
+  "Logger": {
+    "description": "Log actions to a file",
+    "type": "script",
+    "file": "logger.js",
+    "enabled": false
+  }
+}

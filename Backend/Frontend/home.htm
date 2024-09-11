@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/api/assets?file=module&name=translator.js"></script>
+    <script type="module" src="/api/assets?file=module&name=marked"></script>
+    <script type="module" src="/api/assets?file=module&name=dompurify"></script>
+    <script src="/api/assets?file=homescript"></script>
+    <link rel="stylesheet" href="/api/assets?file=theme" />
+    <link rel="stylesheet" href="/api/assets?file=homestyle" />
+    <title trjs trjsid="title">Mon Compte - LocalPost</title>
+  </head>
+  <body>
+    <img
+      src="/api/assets?file=svg&name=house"
+      link="true"
+      class="linkTo:/home"
+      style="position: absolute"
+    />
+    <nav></nav>
+    <form id="search_user">
+      <input
+        type="search"
+        name="search"
+        id="user"
+        placeholder=""
+        trjs
+        trjsid="search"
+      />
+      <button type="submit" id="search">
+        <svg viewBox="0 0 25 25" width="15px" height="15px">
+          <path stroke="#000" d="m13 13 12 12" stroke-width="3" />
+          <circle cx="11" cy="11" r="10" stroke="#000" fill="#058dfcf6" />
+        </svg>
+      </button>
+    </form>
+
+    <div id="grid-container">
+      <section id="profile">
+        <img id="pdp" />
+        <div id="labels">
+          <h3 id="username"></h3>
+          <h4 id="accountperms"></h4>
+          <h5 id="join" trjs trjsid="sign_up" hideOnSearch></h5>
+        </div>
+      </section>
+      <div id="endgrid">
+        <div id="stats" hideOnSearch>
+          <span id="postsnbr"></span>
+        </div>
+        <div id="new_post" hideOnSearch>
+          <a id="newPost" class="content" href="/posts/edit">+ Post</a>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="flex-container" hideOnSearch>
+      <span class="menuoption" id="postsopt">Vos posts</span>
+      <span class="menuoption" id="status">Statut (à venir)</span>
+      <span class="menuoption" id="messages">Messagerie (à venir)</span>
+      <span class="menuoption" id="params">Paramètres (à venir)</span>
+      <span class="menuoption" id="help">Aide / Signaler un bug</span>
+    </div> -->
+  </body>
+</html>

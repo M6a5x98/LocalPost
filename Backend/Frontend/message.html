@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+    ></script>
+    <script
+      type="module"
+      src="https://unpkg.com/dompurify@3.1.5/dist/purify.min.js"
+    ></script>
+    <link rel="stylesheet" href="/api/assets?file=theme" />
+    <link rel="stylesheet" href="/api/assets?file=homestyle" />
+    <title></title>
+  </head>
+  <body>
+    <main></main>
+    <script>
+      function createElementWithAttr(el, attrs, values) {
+        const element = document.createElement(el);
+        if (attrs.length !== values.length) return element;
+        for (let i = 0; i < attrs.length; i++) {
+          element.setAttribute(attrs[i], values[i]);
+        }
+        return element;
+      }
+      const postscontainer = document.querySelector("main");
+      function AppendToPostContainer(username, title, content) {
+        title = DOMPurify.sanitize(marked.parse(title));
+        content = DOMPurify.sanitize(marked.parse(content));
+        let titleTag = document.createElement("div");
+        titleTag.innerHTML = title;
+        document.title = titleTag.textContent + " - Localpost";
+        const postcontainer = createElementWithAttr("div", ["class"], ["post"]);
+        const [
+          usernamecontainer,
+          titlecontainer,
+          textcontainer,
+          posttextcontainer,
+          usercontainer,
+          reactionscontainer,
+          // likediv,
+          // unlikediv,
+          // whatdiv,
+          // okdiv,
+          // notokdiv,
+          //   threedots,
+        ] = [
+          createElementWithAttr("h4", ["class"], ["username"]),
+          createElementWithAttr("h3", ["class"], ["postTitle title"]),
+          createElementWithAttr("p", ["class"], ["postContent content"]),
+          createElementWithAttr("div", ["class"], ["postText"]),
+          createElementWithAttr("div", ["class"], ["user"]),
+          createElementWithAttr("div", ["class"], ["reactions"]),
+          //   createElementWithAttr(
+          //     "div",
+          //     ["class", "style", "action"],
+          //     [
+          //       "like focusEl icon",
+          //       "--normal-width: 1vw; --normal-height: 1vh; --more: 2%;",
+          //       "like",
+          //     ]
+          //   ),
+          //   createElementWithAttr(
+          //     "div",
+          //     ["class", "style", "action"],
+          //     [
+          //       "dislike focusEl icon",
+          //       "--normal-width: 1vw; --normal-height: 1vh; --more: 2%;",
+          //       "dislike",
+          //     ]
+          //   ),
+          //   createElementWithAttr(
+          //     "div",
+          //     ["class", "style", "action"],
+          //     [
+          //       "what focusEl icon",
+          //       "--normal-width: 1vw; --normal-height: 1vh; --more: 2%;",
+          //       "what",
+          //     ]
+          //   ),
+          //   createElementWithAttr(
+          //     "div",
+          //     ["class", "style", "action"],
+          //     [
+          //       "ok focusEl icon",
+          //       "--normal-width: 1vw; --normal-height: 1vh; --more: 2%;",
+          //       "ok",
+          //     ]
+          //   ),
+          //   createElementWithAttr(
+          //     "div",
+          //     ["class", "style", "action"],
+          //     [
+          //       "notok focusEl icon",
+          //       "--normal-width: 1vw; --normal-height: 1vh; --more: 2%;",
+          //       "notok",
+          //     ]
+          //   ),
+          //   createElementWithAttr("div", ["class"], ["option"]),
+        ];
+        [
+          usernamecontainer.textContent,
+          titlecontainer.innerHTML,
+          textcontainer.innerHTML,
+          usernamecontainer.style.color,
+        ] = [
+          username,
+          title,
+          content,
+          sessionStorage.getItem("localpost.nameColor"),
+        ];
+        usercontainer.append(
+          usernamecontainer,
+          createElementWithAttr(
+            "img",
+            ["src"],
+            ["/api/assets?file=pdp&name=" + username]
+          )
+        );
+        posttextcontainer.append(titlecontainer, textcontainer);
+        // reactionscontainer.append(likediv, unlikediv, okdiv, notokdiv, whatdiv);
+        reactionscontainer
+          .querySelectorAll("div.focusEl")
+          .forEach((div) =>
+            div.appendChild(
+              createElementWithAttr(
+                "img",
+                ["src", "type"],
+                [
+                  `/api/assets?file=svg&name=${div.getAttribute("action")}`,
+                  "svg",
+                ]
+              )
+            )
+          );
+        // const tbody = createElementWithAttr("tbody", [], []);
+        // const table = createElementWithAttr(
+        //   "table",
+        //   ["class"],
+        //   ["content hidden postoption"]
+        // );
+        // table.appendChild(tbody);
+        // for (const option of MenuOptions) {
+        //   const el = createElementWithAttr("tr", [], []);
+        //   const elChild = createElementWithAttr("td", [], []);
+        //   elChild.textContent = option;
+        //   el.appendChild(elChild);
+        //   tbody.append(el);
+        // }
+        // threedots.append(
+        //   createElementWithAttr(
+        //     "img",
+        //     ["src"],
+        //     ["/api/assets?name=options&file=svg"]
+        //   ),
+        //   table
+        // );
+        postcontainer.append(
+          usercontainer,
+          posttextcontainer,
+          //   threedots,
+          reactionscontainer
+        );
+        return postcontainer;
+      }
+
+      (async () => {
+        const response = await fetch(
+          "//" +
+            location.host +
+            "/api/messages/" +
+            location.pathname
+              .split("/")
+              .filter((e) => e !== "")
+              [
+                location.pathname.split("/").filter((e) => e !== "").length - 1
+              ].toString(),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "post",
+          }
+        );
+        let res = await response.json();
+        const idsToFetch = [];
+        for (const resData of res.data) {
+          idsToFetch.push(resData.data.author.id);
+        }
+        const usernamesResponse = await fetch(
+          "//" + location.host + "/api/user/" + idsToFetch.toString(),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const usernames = await usernamesResponse.json();
+        for (let i = 0; i < usernames.username.length; i++) {
+          const [username, title, content] = [
+            usernames.username[i],
+            res.data[i].post.title,
+            res.data[i].post.content,
+          ];
+          postscontainer.appendChild(
+            AppendToPostContainer(username, title, content)
+          );
+        }
+      })();
+      setInterval(() => {
+        let [hours, minutes, seconds] = [
+          new Date().getHours() > 2
+            ? "0" + new Date().getHours()
+            : new Date().getHours().toString(),
+          new Date().getMinutes() > 10
+            ? "0" + new Date().getMinutes()
+            : new Date().getMinutes().toString(),
+          new Date().getSeconds() < 10
+            ? "0" + new Date().getSeconds()
+            : new Date().getSeconds().toString(),
+        ];
+        console.log(
+          "%c" + (hours + minutes + seconds),
+          "color: #" + hours + minutes + seconds + ";"
+        );
+      }, 900);
+    </script>
+  </body>
+</html>

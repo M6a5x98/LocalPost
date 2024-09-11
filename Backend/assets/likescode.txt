@@ -1,5 +1,5 @@
-0 = Like
-1 = Dislike
-2 = D'accord
-3 = Pas d'accord
-4 = What ??
+0="Like"
+1="Dislike"
+2="D'accord"
+3="Pas d'accord"
+4="What"

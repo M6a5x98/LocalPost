@@ -8,133 +8,164 @@ const {
   ReadAccountFile,
   GetPostProperties,
   Post2HTML,
+  GetFormatedDate,
 } = require("../utils");
-const { appendFileSync, readFileSync, writeFileSync } = require("fs");
+const {
+  appendFileSync,
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+} = require("fs");
 
 function like(req, res) {
-  let token;
-  let reactCode;
-  try {
-    TestReqBody(req.body);
-    TestTokenHeader(req.headers["localpost-token"]);
-  } catch (err) {
+  if (
+    !TestReqBody(req["headers"]["content-type"]) &&
+    !TestTokenHeader(req["headers"]["localpost-token"])
+  ) {
     res.status(400);
-    res.setHeader("Content-Type", "text/html");
-    res.send(
-      `<h1>Error</h1><strong>Bonjour, s'il vous plaît arretez de faire joujou avec mon API,</strong><br /><p>vous saviez que si j'avais pas mis un try catch,</p><br /><p>le serveur aurait crash (ça rime hihihi)</p><br /><span><a href="https://github.com/m6a5x98" target="_blank">m6a5x98</a> le créateur de l'API vous remercie de prendre compte au + vite de ce message et de mettre les trucs qu'il faut (headers, params, ... )</span><footer><p>For pepole who come from USA or from other countries I didn't do the translation so use <a href="https://translate.google.com/">the best tool</a> !</p></footer>`
-    );
+    res.json({
+      message: `Bad "Content-type"/"localpost-token" header`,
+      succes: false,
+    });
     console.warn(
-      `Request without localpost-token header sended from ${req.ip}`
+      `\x1b[2;255;127;39mRequest without Content-Type header sended from ${req.ip}\x1b[0m`
     );
     return;
-  }
-  token = req.headers["localpost-token"];
-  reactCode = req.body.data.reactCode;
-  if (!TokenExists(token))
-    res.json({
-      error: true,
-      code: 106,
-      message: `Token ${token} doesn't exists.`,
-    });
+  } else {
+    const token = req.headers["localpost-token"];
+    const reactCode = req["body"]["data"]["reactCode"];
+    if (!TokenExists(token)) {
+      res.json({
+        succes: false,
+        code: 106,
+        message: `Token ${token} doesn't exists.`,
+      });
+      return;
+    }
+    if (reactCode > 4) {
+      res.status(400);
+      res.json({
+        succes: false,
+        code: 103,
+        message: "You must set `data.reactCode` in this request.",
+      });
+    }
 
-  if (reactCode > 4) {
-    res.status(400);
-    res.json({
-      error: true,
-      code: 103,
-      message: "You must set `data.reactCode` in this request.",
-    });
-  }
+    const postID = req.params["id"];
+    if (CanLike(postID, GetValueFromAccountFile(Token(token), ["id"]))) {
+      appendFileSync(
+        "./assets/likes.prop",
+        `${postID}=${GetValueFromAccountFile(Token(token), [
+          "id",
+        ])},${reactCode}\n`
+      );
+      const userFile = ReadAccountFile(Token(token));
+      const UpdatedLikes = GetValueFromAccountFile(Token(token), ["likes"]);
+      UpdatedLikes.push(parseInt(postID));
+      Object.defineProperty(userFile, "likes", {
+        value: UpdatedLikes,
+      });
 
-  const postID = req.params["id"];
-  if (CanLike(postID, GetValueFromAccountFile(Token(token), ["id"]))) {
-    appendFileSync(
-      "../../assets/likes.prop",
-      `${postID}=${GetValueFromAccountFile(Token(token), [
-        "id",
-      ])},${reactCode}\n`
-    );
-    const userFile = ReadAccountFile(Token(token));
-    const UpdatedLikes = GetValueFromAccountFile(Token(token), ["likes"]);
-    UpdatedLikes.push(parseInt(postID));
-    Object.defineProperty(userFile, "likes", {
-      value: UpdatedLikes,
-    });
-
-    writeFileSync(
-      "../../assets/Users/" + Token(token) + ".json",
-      JSON.stringify(userFile)
-    );
-    res.json({ succes: true });
+      writeFileSync(
+        "./database/Users/" + Token(token) + ".json",
+        JSON.stringify(userFile),
+        "utf-8"
+      );
+      res.json({ succes: true });
+    } else {
+      res.json({ succes: false, message: "Can't like" });
+    }
   }
 }
-
 function edit(req, res) {
-  let token;
-  let newPost;
-  try {
-    TestTokenHeader(req.headers["localpost-token"]);
-    TestReqBody(req.body);
-  } catch (err) {
+  if (
+    !TestReqBody(req["headers"]["content-type"]) &&
+    !TestTokenHeader(req["headers"]["localpost-token"])
+  ) {
     res.status(400);
-    res.setHeader("Content-Type", "text/html");
-    res.send(
-      `<h1>Error</h1><strong>Bonjour, s'il vous plaît arretez de faire joujou avec mon API,</strong><br /><p>vous saviez que si j'avais pas mis un try catch,</p><br /><p>le serveur aurait crash (ça rime hihihi)</p><br /><span><a href="https://github.com/m6a5x98" target="_blank">m6a5x98</a> le créateur de l'API vous remercie de prendre compte au + vite de ce message et de mettre les trucs qu'il faut (headers, params, ... )</span><footer><p>For pepole who come from USA or from other countries I didn't do the translation so use <a href="https://translate.google.com/">the best tool</a> !</p></footer>`
-    );
+    res.json({
+      message: `Bad "Content-type"/"localpost-token" header`,
+      succes: false,
+    });
     console.warn(
-      `Request without localpost-token header sended from ${req.ip}`
+      `\x1b[2;255;127;39mRequest without Content-Type header sended from ${req.ip}\x1b[0m`
     );
     return;
-  }
-  token = req.headers["localpost-token"];
-  newPost = req.body["data"]["newPost"];
-
-  if (!TokenExists(token)) {
-    res.json({
-      error: true,
-      code: 106,
-      message: `Token ${token} doesn't exists.`,
-    });
-    return;
-  }
-
-  const ActionPerformedByCreator =
-    GetValueFromAccountFile(Token(token), ["id"]) ===
-    JSON.parse(
-      readFileSync(
-        "../../assets/message/" + req.params["id"] + ".json",
-        "utf-8"
-      )
-    )["data"]["author"]["id"];
-  const EditerIsAdminOrModo =
-    GetValueFromAccountFile(Token(token), ["account", "perms"]) === "admin" ||
-    GetValueFromAccountFile(Token(token), ["account", "perms"]) === "modo";
-
-  if (ActionPerformedByCreator || EditerIsAdminOrModo) {
-    const NewPostFile = JSON.parse(
-      readFileSync(
-        "../../assets/message/" + req.params["id"] + ".json",
-        "utf-8"
-      )
-    );
-
-    Object.defineProperty(NewPostFile, "post", {
-      value: { title: newPost.title, content: newPost.content },
-    });
-
-    writeFileSync(
-      "../../assets/message/" + req.params["id"] + ".json",
-      JSON.stringify(NewPostFile)
-    );
-
-    res.json({ succes: true, html: Post2HTML(GetPostProperties(NewPostFile)) });
   } else {
-    res.status(401);
-    res.json({
-      error: true,
-      code: 302,
-      message: "You need higher perms to perform this action",
-    });
+    const token = req.headers["localpost-token"];
+    const newPost = req["body"]["data"]["newPost"];
+    if (!TokenExists(token)) {
+      res.json({
+        succes: false,
+        code: 106,
+        message: `Token ${token} doesn't exists.`,
+      });
+      return;
+    }
+
+    const ActionPerformedByCreator =
+      GetValueFromAccountFile(Token(token), ["id"]) ===
+      JSON.parse(
+        readFileSync(
+          "./database/messages/" + req.params["id"] + ".json",
+          "utf-8"
+        )
+      )["data"]["author"]["id"];
+    const EditerIsAdminOrModo =
+      GetValueFromAccountFile(Token(token), ["account", "perms"]) === "admin" ||
+      GetValueFromAccountFile(Token(token), ["account", "perms"]) === "modo";
+
+    if (ActionPerformedByCreator || EditerIsAdminOrModo) {
+      const NewPostFile = JSON.parse(
+        readFileSync(
+          "./database/messages/" + req.params["id"] + ".json",
+          "utf-8"
+        )
+      );
+
+      Object.defineProperty(NewPostFile, "post", {
+        value: { title: newPost.title, content: newPost.content },
+      });
+
+      writeFileSync(
+        "./database/messages/" + req.params["id"] + ".json",
+        JSON.stringify(NewPostFile),
+        "utf-8"
+      );
+      /**/
+      let post = {
+        title: newPost.title,
+        content: newPost.content,
+      };
+      let numberOfFiles = 0;
+      readdirSync("./database/messages/").forEach((file) => numberOfFiles++);
+      let dateData = GetFormatedDate(new Date());
+
+      let data = {
+        id: numberOfFiles,
+        author: {
+          id: JSON.parse(
+            readFileSync("./database/Users/" + Token(token) + ".json", "utf8")
+          )["id"],
+          perms: JSON.parse(
+            readFileSync("./database/Users/" + Token(token) + ".json", "utf8")
+          )["account"]["perms"],
+        },
+        dateData: dateData,
+      };
+      /**/
+      res.json({
+        succes: true,
+        html: Post2HTML({ post, data }),
+      });
+    } else {
+      res.status(401);
+      res.json({
+        succes: false,
+        code: 302,
+        message: "You need higher perms to perform this action",
+      });
+    }
   }
 }
 

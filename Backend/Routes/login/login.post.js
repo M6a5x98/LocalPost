@@ -1,60 +1,97 @@
 const {
   ReadAccountFile,
-  generateToken,
   AppendTokenFile,
   IsTokenAlredyAssignatedTo,
+  TestReqBody,
 } = require("../utils");
+const { Logger } = require("../../logger");
+const { createHash } = require("crypto");
+const { parse } = require("bowser");
 
 function post(req, res) {
-  let username;
-  let password;
-  try {
-    username = req.body.data.username;
-    password = req.body.data.password;
-  } catch (error) {
+  if (!TestReqBody(req["headers"]["content-type"])) {
     res.status(400);
-    res.send(`
-        <h1>Error</h1>
-        <strong>Bonjour, s'il vous plaît arretez de faire joujou avec mon API,</strong><br />
-        <p>vous saviez que si j'avais pas mis un try catch,</p><br />
-        <p>le serveur aurait crash (ça rime hihihi)</p><br />
-        <span><a href="https://github.com/m6a5x98" target="_blank">m6a5x98</a> le créateur de l'API vous remercie de prendre compte au + vite de ce message et de mettre le header qu'il faut</span>
-        <footer>
-        <p>For pepole who come from USA or from other countries I didn't do the translation so use <a href="https://translate.google.com/">the best tool</a> !</p>
-        </footer>`);
-    console.warn(`Request without Content-Type header sended from ${req.ip}`);
+    res.json({
+      succes: false,
+
+      message: `Bad Content type header`,
+      error: true,
+    });
+    console.warn(
+      `\x1b[2;255;127;39mRequest without Content-Type header sended from ${req.ip}\x1b[0m`
+    );
     return;
-  }
-  //read Data
-  if (!ReadAccountFile(username)) {
-    res.json({ error: true, code: 101, message: "User Not Found" });
-    res.status(200);
-    return;
-  }
-  if (ReadAccountFile(username).password === password) {
-    if (IsTokenAlredyAssignatedTo(username)) {
-      res.status(200);
+  } else {
+    const username = req.body.data.username;
+    const password = createHash("sha256")
+      .update(req.body.data.password)
+      .update("localpost")
+      .digest("hex")
+      .toUpperCase();
+
+    new Logger("./routes.log").log(
+      `Connexion tried for "${username}" from "${
+        parse(req.headers["user-agent"]).browser.name
+      }" v. "${parse(req.headers["user-agent"]).browser.version}" on "${
+        parse(req.headers["user-agent"]).os.name
+      }". UA is ${req.headers["user-agent"]}`,
+      __filename.split(require("path").sep)[
+        __filename.split(require("path").sep).length - 1
+      ]
+    );
+    //read Data
+    if (!ReadAccountFile(username)) {
       res.json({
-        error: true,
-        code: 104,
-        message: "Unauthorized connection from multiple devices",
-      });
-    } else {
-      res.setHeader("localpost-token", AppendTokenFile(username));
-      res.json({
-        succes: true,
-        userData: {
-          username: ReadAccountFile(username).username,
-          id: ReadAccountFile(username).id,
-        },
+        succes: false,
+
+        code: 101,
+        message: "User Not Found",
       });
       res.status(200);
       return;
     }
-  } else {
-    res.json({ error: true, code: 102, message: "Wrong password" });
-    res.status(200);
-    return;
+    if (ReadAccountFile(username).password === password) {
+      if (IsTokenAlredyAssignatedTo(username)) {
+        res.status(200);
+        res.json({
+          succes: false,
+
+          code: 104,
+          message: "Unauthorized connection from multiple devices",
+        });
+      } else {
+        this.token = AppendTokenFile(username);
+        // res.setHeader(
+        //   "Set-Cookie",
+        //   encodeURIComponent(
+        //     "token=" +
+        //       this.token +
+        //       "; expires=" +
+        //       require("dayjs")().add(150, "minute").toString()
+        //   )
+        // );
+        res.json({
+          succes: true,
+          data: {
+            username: ReadAccountFile(username).username,
+            id: ReadAccountFile(username).id,
+          },
+          token: this.token,
+        });
+        res.status(200);
+        return;
+      }
+    } else {
+      res.json({
+        succes: false,
+        error: true,
+        code: 102,
+
+        message: "Wrong password",
+      });
+      res.status(200);
+      return;
+    }
   }
 }
 module.exports = { post };

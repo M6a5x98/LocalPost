@@ -4,23 +4,41 @@ const {
   existsSync,
   unlinkSync,
   appendFileSync,
+  statSync,
+  writeFileSync,
 } = require("fs");
+const { resolve, sep } = require("path");
+const { Logger } = require("../logger");
+
+const TokenInCookies2TokenHeader = (req, res, next) => {
+  if (req.method === "GET" || req.headers["cookie"] === undefined) {
+    next();
+    return;
+  }
+  req.headers["cookie"]
+    .split("; ")
+    .filter((e) => e.includes("token"))
+    .map((e) => e.split("="))
+    .forEach((e) => {
+      if (e[0] === "token") {
+        req.headers["localpost-token"] = e[1];
+      }
+    });
+  next();
+};
 
 const GetValueFromAccountFile = (username, propertyPath) => {
-  let coucou = ReadAccountFile(username);
+  let content = ReadAccountFile(username);
   for (let i = 0; i < propertyPath.length; i++) {
-    coucou = coucou[propertyPath[i]];
+    content = content[propertyPath[i]];
     if (i === propertyPath.length - 1) {
-      return coucou;
+      return content;
     }
   }
 };
 
 const Token = (token) => {
-  let TokenList = readFileSync(
-    "../assets/tokens.prop",
-    "utf-8"
-  ).split("\n");
+  let TokenList = readFileSync("./assets/tokens.prop", "utf-8").split("\n");
 
   for (let i = 0; i < TokenList.length; i++) {
     const userAndToken = TokenList[i];
@@ -33,36 +51,41 @@ const Token = (token) => {
 };
 
 const TestTokenHeader = (header) => {
-  if (header === undefined) throw new Error("token is undefiend");
+  return header === undefined;
 };
 
-const TestReqBody = (reqBody) => {
-  if (reqBody == {}) throw new Error("req.body is undefiend");
+const TestReqBody = (ctHeader) => {
+  return ctHeader === "application/json";
+};
+
+const TestReqParams = (reqParams, param) => {
+  return reqParams[param] === undefined;
 };
 
 const ReadAccountFile = (username) => {
   try {
-    return JSON.parse(
+    const result = JSON.parse(
       readFileSync(
-        "../assets/Users/" +
-          encodeURIComponent(username) +
-          ".json",
+        "./database/Users/" + encodeURIComponent(username) + ".json",
         "utf-8"
       )
     );
+    return result;
   } catch (error) {
-    console.error("Fs error :%d", error.errno, "syscall :", error.syscall);
+    console.log("\x1b[31mUser not found\x1b[0m");
     return false;
   }
 };
-
-const GetFormatedDate = () => {
-  const date = new Date();
+/**
+ *
+ * @param {Date} date
+ * @returns The formated date like this DDMMYYYYhhmm
+ */
+const GetFormatedDate = (date) => {
   let MonthYear = "";
   let Day = "";
   let Hour = "";
   let Minute = "";
-  //Get the Month and the Year
   if (date.getMonth().toString().length === 1) {
     MonthYear =
       "0" +
@@ -99,16 +122,18 @@ const GetPostProperties = (rawPost, writerToken) => {
     content: rawPost.content,
   };
   let numberOfFiles = 0;
-  readdirSync(
-    "../assets/message/"
-  ).forEach((file) => numberOfFiles++);
-  let dateData = GetFormatedDate();
+  readdirSync("./database/messages/").forEach((file) => numberOfFiles++);
+  let dateData = GetFormatedDate(new Date());
 
   let data = {
     id: numberOfFiles,
     author: {
-      id: GetValueFromAccountFile(Token(writerToken), ["id"]),
-      perms: GetValueFromAccountFile(Token(writerToken), ["account", "perms"]),
+      id: JSON.parse(
+        readFileSync("./database/Users/" + Token(writerToken) + ".json", "utf8")
+      )["id"],
+      perms: JSON.parse(
+        readFileSync("./database/Users/" + Token(writerToken) + ".json", "utf8")
+      )["account"]["perms"],
     },
     dateData: dateData,
   };
@@ -116,23 +141,12 @@ const GetPostProperties = (rawPost, writerToken) => {
 };
 
 const Post2HTML = (parsedPost) => {
-  const html = `<!DOCTYPE html><html><head><link rel='stylesheet' href='http://localhost:5000/api/assets?file=stylescss'></head><body><main class='${parsedPost.data.author.perms}'><h2 class='${parsedPost.data.author.perms}'>${parsedPost.post.title}</h2><br /><p class='${parsedPost.data.author.perms}'>${parsedPost.post.content}</p><br /></main></body></html>`;
-  return html;
+  return "/api/messages/" + parsedPost.data.id;
 };
 
 const DelPost = (postID) => {
-  if (
-    existsSync(
-      `../assets/message/${parseInt(
-        postID
-      )}.json`
-    )
-  ) {
-    unlinkSync(
-      `../assets/message/${parseInt(
-        postID
-      )}.json`
-    );
+  if (existsSync(`./database/messages/${parseInt(postID)}.json`)) {
+    writeFileSync(`./database/messages/${parseInt(postID)}.json`, "{}");
     return true;
   } else {
     return false;
@@ -142,27 +156,29 @@ const DelPost = (postID) => {
 const generateToken = () => {
   return (
     Math.random().toString(36).substring(2) +
+    "-" +
+    Math.random().toString(36).substring(2) +
+    "-" +
     Math.random().toString(36).substring(2)
   );
 };
 
 const AppendTokenFile = (username) => {
   let token = generateToken();
-  appendFileSync(
-    "../assets/tokens.prop",
-    `${username}=${token}\n`,
-    "utf-8"
+  appendFileSync("./assets/tokens.prop", `${username}=${token}\n`, "utf-8");
+  new Logger("./routes.log").log(
+    `Token ${token} assignated to ${username}`,
+    __filename.split(require("path").sep)[
+      __filename.split(require("path").sep).length - 1
+    ]
   );
-  console.info(`Token ${token} was assignated to ${username}`);
+  require("./disconnecter")(username);
   return token;
 };
 
 const IsTokenAlredyAssignatedTo = (username) => {
   let IsTokenAlredyAssignatedTo;
-  let TokenList = readFileSync(
-    "../assets/tokens.prop",
-    "utf-8"
-  ).split("\n");
+  let TokenList = readFileSync("./assets/tokens.prop", "utf-8").split("\n");
 
   for (let i = 0; i < TokenList.length; i++) {
     const userAndToken = TokenList[i];
@@ -170,22 +186,16 @@ const IsTokenAlredyAssignatedTo = (username) => {
       IsTokenAlredyAssignatedTo = true;
     }
   }
-
-  if (IsTokenAlredyAssignatedTo) {
-    console.log(true);
-    return true;
-  } else {
-    console.log(false);
-    return false;
-  }
+  return IsTokenAlredyAssignatedTo;
 };
-
+/**
+ *
+ * @param {string} token The *token* to check
+ * @returns **true** if the token exists **false** if not
+ */
 const TokenExists = (token) => {
   let tokens = [];
-  readFileSync(
-    "../assets/tokens.prop",
-    "utf-8"
-  )
+  readFileSync("assets/tokens.prop", "utf-8")
     .split("\n")
     .forEach((line) => tokens.push(line.split("=")[1]));
   for (let i = 0; i < tokens.length; i++) {
@@ -196,12 +206,14 @@ const TokenExists = (token) => {
   }
   return false;
 };
-
+/**
+ *
+ * @param {number} postId The *ID* of the post to check
+ * @param {number} userId The *ID* of the user to check for
+ * @returns {boolean} **false** if the user can't like **true** if he can
+ */
 function CanLike(postId, userId) {
-  const postLikes = readFileSync(
-    "../assets/likes.prop",
-    "utf-8"
-  )
+  const postLikes = readFileSync("./assets/likes.prop", "utf-8")
     .split("\n")
     .filter((post) => post.startsWith(postId.toString()))
     .map((string) => string.replace("\r", ""));
@@ -209,14 +221,46 @@ function CanLike(postId, userId) {
     (likedPost) =>
       likedPost.split("=")[1]["split"](",")[0] === userId.toString()
   );
-  return likers.length > 1 ? false : true;
+  return likers.length > 0 ? false : true;
 }
 
+const DataUrlToFile = (dataUrl, fileName) => {
+  return {
+    name: fileName + "." + dataUrl.match(/^data:.+\/(.+);base64,(.*)$/)[1],
+    value: Buffer.from(
+      dataUrl.match(/^data:.+\/(.+);base64,(.*)$/)[2],
+      "base64"
+    ),
+  };
+};
+/**
+ *
+ * @param {number} id The Id of the user
+ * @returns {string} The username matching with this Id
+ */
+const IdToUserName = (id) => {
+  const creationDates = [];
+  const files = readdirSync("./database/Users", { withFileTypes: true }).filter(
+    (e) => e.isFile()
+  );
+  for (const file of files) {
+    creationDates.push({
+      date: statSync(resolve(file.path) + sep + file.name).birthtimeMs,
+      name: file.name.split(".")[0],
+    });
+  }
+  return id > creationDates.sort().length - 1
+    ? null
+    : creationDates.sort()[id]["name"];
+};
+
 module.exports = {
+  TokenInCookies2TokenHeader,
   GetValueFromAccountFile,
   ReadAccountFile,
   TestTokenHeader,
   TestReqBody,
+  TestReqParams,
   Token,
   GetFormatedDate,
   GetPostProperties,
@@ -227,4 +271,39 @@ module.exports = {
   IsTokenAlredyAssignatedTo,
   TokenExists,
   CanLike,
+  DataUrlToFile,
+  IdToUserName,
 };
+
+// class DisconnecterStackManager {
+//   static #log() {}
+//   /**
+//    *
+//    * @param {Date} date
+//    * @param {String} token
+//    * @returns expiration date of the token
+//    */
+//   static add(date, token) {
+//     appendFileSync(
+//       "./assets/disconnection.prop",
+//       `${Token(token)}=${date.getTime() + 5400000}\n`
+//     );
+//     return date.getTime() + 5400000;
+//   }
+//   /**
+//    *
+//    * @param {Date} initDate
+//    * @param {String} token
+//    */
+//   static remove(initDate, token) {
+//     // writeFileSync(
+//     //   "./assets/disconnection.prop",
+//     //   readFileSync("./assets/disconnection.prop", "utf-8").replace(
+//     //     `${Token(token)}=${initDate.getTime() /* + 5400000*/}`
+//     //   )
+//     // );
+//     console.log(`${Token(token)}=${initDate.getTime() /* + 5400000*/}`);
+//     return `${Token(token)}=${initDate.getTime() /* + 5400000*/}`;
+//   }
+// }
+// // DisconnecterStackManager.remove(new Date(), "imlpjkf61wil5ajucmjrp");

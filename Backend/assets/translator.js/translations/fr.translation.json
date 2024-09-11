@@ -1,0 +1,90 @@
+{
+  "language": "fr",
+  "exact_domain": true,
+  "domains": {
+    "localpost.fr": { "description": "main domain" },
+    "localhost": { "description": "dev domain" }
+  },
+  "translations": {
+    "/": {
+      "title": "Connexion - LocalPost",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "nav_message": "Bienvenue sur LocalPost !",
+      "updates_header": "Mises à jours récentes",
+      "features_added": "Ajouts :",
+      "major_update": "Mise à jour majeure",
+      "minor_update": "Mise à jour mineure",
+      "signup": "S'inscrire",
+      "or": " Ou "
+    },
+    "/home": {
+      "title": "Mon Compte - LocalPost",
+      "sign_up": "Inscrit le ",
+      "search": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "Recherche d'un utilisateur"
+      },
+      "delete_post": "Supprimer",
+      "edit_post": "Modifier",
+      "search_empty": "Votre requête de recherche est vide",
+      "search_not_found": "Aucun utilisateur correspondant à $ n'a été trouvé",
+      "account_delete": "Êtes vous sur de vouloir supprimer votre compte ?",
+      "password": "Mot de passe"
+    },
+    "/user/*": {
+      "title": {
+        "type": "warning",
+        "translate": false
+      },
+      "sign_up": "Inscrit le ",
+      "search": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "Recherche d'un utilisateur"
+      },
+      "nopost_you": "Vous",
+      "nopost_text_1": " n'avez encore rien publié",
+      "nopost_text_2": " n'a encore rien publié"
+    },
+    "/posts/edit": {
+      "postNotExist": "Ce post n'existe pas",
+      "cantEditPost": "Vous ne pouvez pas éditer ce post",
+      "title": "Nouveau Post",
+      "cancel": "Annuler",
+      "publish": "Publier",
+      "edit": "Éditer",
+      "confirm_create_post": "Êtes-vous sûr de publier ce post ?",
+      "confirm_edit_post": "Êtes-vous sûr d'éditer ce post ?",
+      "cant_publish_empty": "Vous ne pouvez pas publier un post sans titre ou contenu."
+    },
+    "/signup": {
+      "title": "Créer un compte - Localpost",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "username_pl": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "my_username"
+      },
+      "password_pl": {
+        "type": "attribute",
+        "name": "placeholder",
+        "value": "Mot.de#passe@secret"
+      },
+      "submit": "Prochaine étape →",
+      "nav_message": "Bienvenue sur LocalPost !",
+      "updates_header": "Mises à jours récentes",
+      "features_added": "Ajouts :",
+      "major_update": "Mise à jour majeure",
+      "minor_update": "Mise à jour mineure",
+      "upload_and_finish": "Créer mon compte",
+      "selected_file": "Fichier sélectionné : ",
+      "no_file": "Pas de fichier",
+      "file_not_valid": "Le type de fichier n'est pas valide",
+      "upload": "Uploader ma photo de profil"
+    }
+  }
+}
