@@ -66,7 +66,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Content-Type,User-Agent,localpost-token"
   );
-  res.setHeader("Report-Bug-Url", "https://github.com/m6a5x98/Posts/issues");
+  res.setHeader("Report-Bug-Url", "https://github.com/m6a5x98/LocalPost/issues");
   if (require("./features.json").csvUAStats.enabled) {
     if (req.url.split("?")[0] === "/" || req.url.split("?")[0] === "/home") {
       appendFileSync(
