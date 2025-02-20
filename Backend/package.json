@@ -1,7 +1,7 @@
 {
-  "name": "localpost-api",
+  "name": "localpost",
   "version": "1.0.0",
-  "description": "A la base, un test mais un se retouve avec une super API qui marche.",
+  "description": "This was initially a test but it turned into a working API.",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
