@@ -56,7 +56,7 @@ function handleRequestResponse(requestResponse) {
     nav.querySelector("span").setAttribute("type", "warn");
     nav.querySelector("span").textContent = requestResponse.message;
   } else if (requestResponse.succes) {
-    document.cookie = `token=${requestResponse.token}; Max-Age=5400; SameSite=None`;
+    document.cookie = `token=${requestResponse.token}; Max-Age=5400; SameSite=Lax`;
     nav.querySelector("span").setAttribute("class", "");
     nav.querySelector("span").setAttribute("type", "good");
     nav.querySelector("span").textContent =
